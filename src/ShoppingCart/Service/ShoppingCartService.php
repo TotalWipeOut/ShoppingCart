@@ -41,14 +41,19 @@ class ShoppingCartService
             $this->session['cart'] = array();
         }
 
+        $tokens = array();
         if ($this->isMultidimention($items)) {
             foreach ($items as $item) {
-                $this->session['cart'][$this->generateToken($item)] = $this->hydrator->hydrate($item, new $this->entityPrototype());
+                $token = $this->generateToken($item);
+                $this->session['cart'][$token] = $this->hydrator->hydrate($item, new $this->entityPrototype());
+                $tokens[] = $token;
             }
         } else {
-            $this->session['cart'][$this->generateToken($items)] = $this->hydrator->hydrate($items, $this->entityPrototype);
+            $token = $this->generateToken($item);
+            $this->session['cart'][$token] = $this->hydrator->hydrate($items, $this->entityPrototype);
+            $tokens[] = $token;
         }
-        return true;
+        return $tokens;
     }
 
     /**
