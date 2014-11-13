@@ -49,7 +49,7 @@ class ShoppingCartService
                 $tokens[] = $token;
             }
         } else {
-            $token = $this->generateToken($item);
+            $token = $this->generateToken($items);
             $this->session['cart'][$token] = $this->hydrator->hydrate($items, $this->entityPrototype);
             $tokens[] = $token;
         }
